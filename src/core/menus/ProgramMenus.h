@@ -18,8 +18,11 @@
 #ifndef PROGRAM_MENUS_H_
 #define PROGRAM_MENUS_H_
 
+#include "Program.h"
+
 namespace ProgramMenus {
     void selectProgram(int index);
+    void selectBatteryId(Program::ProgramType prog);
 };
 
 

@@ -41,6 +41,7 @@ namespace Monitor {
     volatile uint8_t i_externalError;
     uint16_t etaDeltaSec;
     uint16_t etaStartTimeCalc;
+    uint16_t batteryId;
 
     bool isBalancePortConnected;
 
@@ -56,6 +57,30 @@ namespace Monitor {
     void calculateDeltaProcentTimeSec();
 
 } // namespace Monitor
+
+uint16_t Monitor::getBatteryId()
+{
+	return batteryId;
+}
+
+void Monitor::setBatteryId(uint16_t batId)
+{
+	batteryId = batId;
+
+}
+void Monitor::incBatteryId()
+{
+        batteryId++;
+	if(batteryId > 300)batteryId=0;
+
+}
+void Monitor::decBatteryId()
+{
+        batteryId--;
+	if(batteryId < 1)batteryId=300;
+
+}
+
 
 void Monitor::calculateDeltaProcentTimeSec()
 {

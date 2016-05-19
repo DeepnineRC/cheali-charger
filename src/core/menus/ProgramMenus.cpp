@@ -22,6 +22,7 @@
 #include "eeprom.h"
 #include "ProgramDataMenu.h"
 #include "memory.h"
+#include "Monitor.h"
 
 // Program selection depending on the battery type
 
@@ -157,8 +158,52 @@ void ProgramMenus::selectProgram(int index)
                 ProgramData::saveProgramData(index);
                 selectPrograms = getSelectProgramMenu();
             } else {
-                Program::run(prog);
+                selectBatteryId(prog);
             }
         }
     } while(menuIndex >= 0);
+}
+
+void ProgramMenus::selectBatteryId(Program::ProgramType prog)
+{
+uint8_t key;
+bool showIt = true;
+
+do {
+        key =  Keyboard::getPressedWithDelay();
+        if(key == BUTTON_DEC)
+        {
+			Monitor::decBatteryId();
+			showIt = true;
+		}
+		else if(key == BUTTON_INC)
+		{
+			Monitor::incBatteryId();
+
+			showIt = true;
+
+        }
+        else if(key == BUTTON_STOP)
+        {
+			break;
+		}
+		else if( key == BUTTON_START) {
+            Program::run(prog);
+            break;
+        }
+        if(showIt)
+        {
+			//display
+			lcdClear();
+			lcdSetCursor(0,1);
+			lcdPrint_P(string_batteryIdent);
+			lcdSetCursor(11,1);
+			lcdPrintUnsigned(Monitor::getBatteryId(),5);
+			showIt=false;
+		}
+
+    } while(true);
+
+
+
 }

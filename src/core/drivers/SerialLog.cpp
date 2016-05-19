@@ -42,6 +42,7 @@ namespace SerialLog {
     enum State { On, Off, Starting };
     uint32_t startTime;
     uint32_t currentTime;
+    uint32_t logTime;
 
     State state = Off;
     uint8_t CRC;
@@ -300,6 +301,18 @@ void sendChannel3()
     sendEnd();
 }
 
+void sendChannel9()
+{
+    uint16_t v;
+    sendHeader(9);
+    //todo send settings
+    v = Monitor::getBatteryId();
+    printUInt(v);
+    printD();
+
+
+    sendEnd();
+}
 
 void sendTime()
 {
@@ -312,7 +325,20 @@ void sendTime()
         adc = true;
     }
     sendChannel1();
-    if(uart > Settings::Normal)
+    if(currentTime < 30000)
+    {
+        sendChannel9();
+    }
+    else
+    {
+        if(logTime+60000 < currentTime)
+	{
+		sendChannel9();
+		logTime = currentTime;
+	}
+
+    }
+if(uart > Settings::Normal)
         sendChannel2(adc);
 
     if(uart > Settings::Debug)

@@ -38,6 +38,10 @@ namespace Monitor {
     uint16_t getTotalChargeDischargeTimeSec();
     uint16_t getTotalChargeDischargeTimeMin();
     uint16_t getETATime();
+    uint16_t getBatteryId();
+    void setBatteryId(uint16_t batId);
+    void incBatteryId();
+    void decBatteryId();
 
     uint8_t getChargeProcent();
 

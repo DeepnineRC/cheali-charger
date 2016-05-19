@@ -63,6 +63,7 @@ namespace ProgramMenus {
     STRING(dcCycle,             "D>C format");
     STRING(capacityCheck,       "capacity check");
     STRING(editBattery,         "edit battery");
+    STRING(batteryIdent, "battery id:");
 }
 
 namespace options {
